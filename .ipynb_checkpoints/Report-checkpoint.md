@@ -1,9 +1,9 @@
----
+
+--- 
 title: Correlation between GDP and Sustainable Development Index (SDI)
 date: Mar. 2022
 author: Thomas French
 geometry: margin=1.25in
-lof: yes
 ---
 
 
@@ -21,68 +21,75 @@ To process the data I started by uploading then filtering the two data sets. sin
 <br><br>
 
 ### Code:
-for h in range(0,220):<br>
-    &ensp;&ensp;cond = dfgdp2['country'].isin(df['country'])<br>
-    &ensp;&ensp;dfgdp2.drop(dfgdp2[cond].index, inplace = True)<br>
-for h in range(0,220):<br>
-    &ensp;&ensp;cond = dfgdp['country'].isin(dfgdp2['country'])<br>
-    &ensp;&ensp;dfgdp.drop(dfgdp[cond].index, inplace = True)<br>
+```python
+for h in range(0,220):
+    cond = dfgdp2['country'].isin(df['country'])
+    dfgdp2.drop(dfgdp2[cond].index, inplace = True)
+for h in range(0,220):
+    cond = dfgdp['country'].isin(dfgdp2['country'])
+    dfgdp.drop(dfgdp[cond].index, inplace = True)
 
 
-for h in range(0,220):<br>
-    &ensp;&ensp;cond = df1['country'].isin(dfgdp['country'])<br>
-    &ensp;&ensp;df1.drop(df1[cond].index, inplace = True)<br>
-for h in range(0,220):<br>
-    &ensp;&ensp;cond = df['country'].isin(df1['country'])<br>
-    &ensp;&ensp;df.drop(df[cond].index, inplace = True)<br><br>
+for h in range(0,220):
+    cond = df1['country'].isin(dfgdp['country'])
+    df1.drop(df1[cond].index, inplace = True)
+for h in range(0,220):
+    cond = df['country'].isin(df1['country'])
+    df.drop(df[cond].index, inplace = True)
 
 
 
-dfgdp.drop(dfgdp.iloc[:, 1:31], inplace = True, axis = 1)<br>
-dfgdp.drop(dfgdp.iloc[:, 31:32], inplace = True, axis = 1)<br>
-
+dfgdp.drop(dfgdp.iloc[:, 1:31], inplace = True, axis = 1)
+dfgdp.drop(dfgdp.iloc[:, 31:32], inplace = True, axis = 1)
+```
 <br><br><br>
 ## Replacing K with 1000
 For the GDP I also had to convert all the K into 1000. This was espicially difficult since there was some data that had decimal points then a K. I replaced the K's with a "* 1e3" then I evaluated the value of each frame. 
 <br><br>
 
 ### Code:
-dict_=list(dfgdp.columns)<br>
-dict_.remove('country')<br>
+```python
+dict_=list(dfgdp.columns)
+dict_.remove('country')
 
-for h in range(0,30):<br>
-    &ensp;&ensp;dfgdp[dict_[h]]=dfgdp[dict_[h]].replace({"k":"*1e3"}, regex=True).map(pd.eval).astype(int)<br>
-<br><br><br>
-
+for h in range(0,30):
+    dfgdp[dict_[h]]=dfgdp[dict_[h]].replace({"k":"*1e3"}, regex=True).map(pd.eval).astype(int)
+```
 
 # Displaying the Data
 I displayed the data by putting it all in one grid with different colors for each year but there are too many years to see the difference or if there is any trend between years.
 
-## GDP/SDI for first 10 years
-![all.png](attachment:db660eec-51d3-437a-95c5-d1dd1f26c4d5.png)
+refer to figure 1
+
+![GDP/SDI for first 10 years](all.png)
+
 <br><br>
 
 After that I created a loop to graph a grid of SDI vs GDP each point being a country and each frame in the grid being a different year. 
 
-## Grid of graphs for every year
-![allyears.png](attachment:53f914f9-5871-429b-bd63-3cfb181ba851.png)
+refer to figure 2
+
+![Grid of graphs for every year](allyears.png)
 
 Still the graphs are very small. So I create graphs just like the first one but with 5 years each.
 
-## 1898-1993
-![1st5.png](attachment:f1ed02ce-ba19-4370-ac27-6e3b3bd96eff.png)
-## 1994-1998
-![2nd5.png](attachment:aa19cfbc-49ef-4248-8a81-123bc65af9b3.png)
-## 1899-2003
-![3rd5.png](attachment:2db8f9c4-48c1-46c2-bb27-0f5d1ea15346.png)
-## 2004-2008
-![4th5.png](attachment:de30b8c2-0eab-4c4e-905c-b1f6fe5baf87.png)
-## 2009-2013
-![5th5.png](attachment:009e79ef-8df1-4d9b-b751-c9c53b8baaed.png)
+refer to figures 3-7
+
+![1st5.png](1st5.png)
+
+
+
+![2nd5.png](2nd5.png)
+
+![3rd5.png](3rd5.png)
+
+![4th5.png](4th5.png)
+
+![5th5.png](5th5.png)
 
 After that I tried to group the very high GDP per capita countries that also have very low SDI. It was I ended up creating a new data frame then I found the worst country for GDP/SDI for each year
 
-|<div style="width:400px">The Worst Country</div>|<div style="width:200px">The Year</div>|
+|The Worst Country|The Year|
 |--------------------|-----|
 |Bahrain             |1989 |
 |Qatar               |1990 |
